@@ -1,18 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
-// if its a file we write we need to write a file reference as opposed to what we did above^
+import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
-
+import VideoList from './components/video_list';
+import VideoDetail from './components/video_detail';
 const API_KEY = 'AIzaSyDT-pvzAYs1Z9QBMADdI_Qw48wdGLkJAUw';
 
 // Create a new component. This component should produce some HTML.
-const App = () => {
+class App extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = { 
+            videos: [],
+            selectedVideo: null
+        };
+        
+        // Same as this.setState({ videos: videos }); if key and value are the same
+        YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
+           this.setState({ 
+               videos: videos,
+               selectedVideo: videos[0]
+           });
+        });
+    }
+    
+    render() {
     return (
         <div>
             <SearchBar />
+            <VideoDetail video={this.state.selectedVideo} />
+            <VideoList
+            onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+            videos={this.state.videos} />
         </div>
     );
+  }
 }
 
 // Take this component's generated HTML and put it on the page (in the DOM)
