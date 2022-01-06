@@ -2,13 +2,24 @@ import React, { Component } from 'react';
 
 // A class-based component as opposed to functional
 class SearchBar extends Component {
+    constructor(props) {
+        super(props);
+        
+        // Only class-based components have state, functional do not
+        this.state = { term: '' };
+    }
+    
     render() {
         // To tap into a browser event you must write
         // onNameOfEvent={reference to event handler}
-        return <input onChange={(event) => console.log(event.target.value)} />;
-    }
-    
-    
+        return(
+            <div>
+                <input
+                value={this.state.term}
+                onChange={(event) => this.setState({ term: event.target.value })} />
+            </div>
+        );
+    } 
 }
 // Only exports the search bar component, needed since each file is siloed from one another
 // So they need to be connected explicitly somehow

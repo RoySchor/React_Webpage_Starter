@@ -1,7 +1,21 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import React from 'react';
+import VideoListItem from './video_list_item';
 
+const VideoList = (props) => {
+    const videoItems = props.videos.map((video) => {
+        return (
+            <VideoListItem
+                onVideoSelect={props.onVideoSelect}
+                key={video.etag}
+                video={video} /> 
+        );   
+    });
+    
+    return (
+        <ul className="col-md-4 list-group">
+        {videoItems}
+        </ul>
+    );
+};
 
+export default VideoList;
